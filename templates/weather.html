@@ -1,19 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {#
     <link rel="stylesheet" href="../static/styles/style.css" />
-    <!-- "{{ url_for('static', filename='styles\style.css') }}" -->
-    <title>{{ title }} Weather /title>
-</head>
-<body>
-    <h1>Weather in: {{ title }}</h1>
-    <p>{{ status }} and temp is:{{ temp }} &deg;</p>
-    <p>Feels like {{ feels_like }}</p>
-    <form action="/weather">
+    #}
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='styles/style.css') }}"
+    />
+    <title>{{title}} Weather</title>
+  </head>
+  <body>
+    <main>
+      <section class="main-section">
+      <h1>Weather in <span>{{title}}</span> city</h1>
+      <p>
+        Status is <span>"{{status}}"</span> and temp is
+        <span>{{temp}} &deg;</span>
+      </p>
+      <p>Feels like <span>{{feels_like}} &deg;</span></p>
+
+      <form action="/weather">
         <input type="text" name="city" id="city" placeholder="Enter the City" />
-        <button type="submit">Enter</button>
-    </form>
-</body>
+        <button type="submit">Submit</button>
+      </form>
+
+      <form action="/">
+        <button class="go_back" type="submit">Go back</button>
+        <p class="desc">or enter another city</p>
+      </form>
+    </section>
+
+    <section class="down-section">
+      <h2 class="creatingby">Creating by Kyrylo Melnikov</h2>
+    </section>
+
+    </main>
+    <footer id="buttom">
+    </footer>
+  </body>
 </html>

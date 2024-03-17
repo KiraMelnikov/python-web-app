@@ -10,23 +10,23 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='styles/style.css') }}"
     />
-    <title>Get Weather</title>
+    <title>City not found</title>
   </head>
   <body>
     <header></header>
     <main>
       <section class="main-section">
-        <h1><span>Get Weather by country</span></h1>
-        <p>{{title}}</p>
+        <h1><span>City not found</span></h1>
+        <h2>Try again ?</h2>
         <form action="/weather">
-          <input
-            type="text"
-            name="city"
-            id="city"
-            placeholder="Enter the City"
-          />
-          <button type="submit">Enter</button>
-        </form>
+            <input
+              type="text"
+              name="city"
+              id="city"
+              placeholder="Enter the City"
+            />
+            <button type="submit">Enter</button>
+          </form>
       </section>
       <section class="second-section">
         <h2 class="creatingby">Creating by Kyrylo Melnikov</h2>

@@ -30,16 +30,20 @@ class Weather(API):
     """ Weather app from API """
 
     @staticmethod
-    def check_connect(url: str) -> bool:
-        """ Checking any connection by url """
-        response = requests.get(url=url)
+    def check_connect() -> bool:
+        """ Checking any connection by url """      
+        url_to_check = 'https://api.openweathermap.org/data/2.5/weather'
+
+        response = requests.get(url=url_to_check)
         if response.ok:
             return True
 
     @classmethod
     def get_weather(cls, city: str ='Kyiv') -> json:
+        """ Getting the weather data from API """
         url = f'https://api.openweathermap.org/data/2.5/weather?appid={os.getenv("API_KEY")}&q={city}&&units=metric'
-        if cls.check_connect(url):
+        
+        if not cls.check_connect():
             try:
                 response = requests.get(url=url).json()
                 return response
@@ -50,7 +54,10 @@ class Weather(API):
 
 
 if __name__=='__main__':
-
+    print(Weather.check_connect())
     city = input("\nEnter the city\n")
+    if not bool(city.strip()):
+        city = "Kyiv"
     weather_data = Weather.get_weather(city)
     print(weather_data)
+ 
