@@ -34,10 +34,8 @@ def get_km(lat_from: float=0, lon_from: float=0, lat_to: float=0, lon_to: float=
 
 def set_km(df:pd.DataFrame=create_test_table()) -> pd.DataFrame:
     for row in df.iterrows():
-        # df.loc[row[0],'distance (km)'] = get_km(row[1]["lat_from"],row[1]["lon_from"],row[1]["lat_to"],row[1]["lon_to"])
-        df.loc[row[0],'distance 2'],df.loc[row[0],'distance 3'] = get_km(row[1]["lat_from"],row[1]["lon_from"],row[1]["lat_to"],row[1]["lon_to"])
+        df.loc[row[0],'distance (km)'] = get_km(row[1]["lat_from"],row[1]["lon_from"],row[1]["lat_to"],row[1]["lon_to"])
     return df
-
 
 if __name__=='__main__':
     print(set_km())
