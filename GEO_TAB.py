@@ -19,16 +19,16 @@ def create_test_table() -> pd.DataFrame:
             }
     return pd.DataFrame(data=table)
 
-def get_km(lat_from: float=0, lon_from: float=0, lat_to: float=0, lon_to: float=0) -> float:
+def get_km(lat_from: float=0, lon_from: float=0, lat_to: float=0, lon_to: float=0, tr_type: str=1) -> float:
     try:
-        result = geoApi().get_request(lat_from, lon_from, lat_to, lon_to) 
+        result = geoApi().get_request(lat_from, lon_from, lat_to, lon_to, tr_type="bus") 
     except:
         result = 0
         raise ConnectionExeptions("Something went wrong")
     else:
         return result["trip"]["summary"]["length"]
     finally:
-        time.sleep(2) # restriction by time in second
+        time.sleep(2) # restriction by time in second“
 
 
 

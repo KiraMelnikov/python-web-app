@@ -19,6 +19,14 @@ class API(ABC):
     def get_request():
         pass
 
+    @abstractclassmethod
+    def get_token():
+        pass
+
+    @abstractclassmethod
+    def check_connect():
+        pass
+
 
 class ConnectionsAPI(API):
     """API GEO-SERVICE optimized for performance and readability."""
