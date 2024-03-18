@@ -10,25 +10,19 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='styles/style.css') }}"
     />
-    <title>Get Weather</title>
+    <title>Get km</title>
   </head>
   <body>
     <header></header>
     <main>
       <section class="main-section">
-        <h1><span>Get Weather by country</span></h1>
+        <h1><span>Geo km</span></h1>
         <p>{{title}}</p>
-        <form action="/weather">
-          <input
-            type="text"
-            name="city"
-            id="city"
-            placeholder="Enter the City"
-          />
-          <button type="submit">Enter</button>
-        </form>
-        <form action="/geo_km">
-          <button type="submit">Go to KM</button>
+        <p>{{var_km}}</p>
+        <p>{{var_cost}}</p>
+        <p>{{var_time}}</p>
+
+
         </form>
       </section>
       <section class="second-section">

@@ -33,10 +33,11 @@ class Weather(API):
     def check_connect() -> bool:
         """ Checking any connection by url """      
         url_to_check = 'https://api.openweathermap.org/data/2.5/weather'
-
-        response = requests.get(url=url_to_check)
-        if response.ok:
-            return True
+        try:
+            response = requests.get(url=url_to_check)
+            return response.ok
+        except requests.RequestException:
+            return False
 
     @classmethod
     def get_weather(cls, city: str ='Kyiv') -> json:
