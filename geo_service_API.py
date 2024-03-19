@@ -8,6 +8,7 @@ urllib3.disable_warnings()
 
 load_dotenv()
 
+
 class ConnectionExeptions(Exception):
     """Custom exception for connection issues."""
 
@@ -61,17 +62,23 @@ class ConnectionsAPI(API):
             return False
 
 
-    def get_request(self: object, lat_from: float, lon_from: float, lat_to: float, lon_to: float, tr_type: str = "car") -> json:  
+    
+    def get_request(self: object, lat_from: float, lon_from: float, lat_to: float, lon_to: float, tr_type: int=0) -> json:  
+        type_tr_dict = {  
+                    0:"auto",
+                    1:"truck",
+                    2:"bus",
+                    3:"motorcycle"
+                    }    
         _PARAMS = {"locations":[{"lat":lat_from,"lon":lon_from},{"lat":lat_to,"lon":lon_to}],
-                "costing":"auto",
-                "costing_options":{
-                                    "auto":{
-                                        "country_crossing_penalty":2000.0
-                                        }
-                                    },
-                "units":"kilometrs",
-                "id":"route",
-                "travel_type":f"{tr_type}"}           
+                    "costing":f"{type_tr_dict[tr_type]}",
+                    "costing_options":{
+                                        "auto":{
+                                            "country_crossing_penalty":2000.0
+                                            }
+                                        },
+                    "units":"kilometrs",
+                    "id":"route"}   
         if self.check_connect(_PARAMS):
             try:
                 response = requests.get(params={'json': json.dumps(_PARAMS)}, verify=False, headers=self._HEADER, url=self._URL)
@@ -97,7 +104,7 @@ def status(func) -> str:
 def Main():
     request1 = ConnectionsAPI()
     try:
-        out = request1.get_request(50.467995,30.572205,49.754654,31.459351)
+        out = request1.get_request(50.467995,30.572205,49.754654,31.459351, tr_type=2)
         print(out)
     except ConnectionExeptions as error:
         print(error)
