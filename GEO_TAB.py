@@ -7,7 +7,12 @@ import time
 # var_km = result["trip"]["summary"]["length"]
 # var_cost = result["trip"]["summary"]["cost"]
 # var_time = result["trip"]["summary"]["time"]
-
+type_tr_dict = {  
+            0:"auto",
+            1:"truck",
+            2:"bus",
+            3:"motorcycle"
+            }  
 
 def create_test_table() -> pd.DataFrame:
     """ Creating a test table """
@@ -19,25 +24,32 @@ def create_test_table() -> pd.DataFrame:
             }
     return pd.DataFrame(data=table)
 
-def get_km(lat_from: float=0, lon_from: float=0, lat_to: float=0, lon_to: float=0, tr_type: str='car') -> float:
+def get_km(lat_from: float=0, lon_from: float=0, lat_to: float=0, lon_to: float=0, tr: int = 0) -> float:
     try:
-        result = geoApi().get_request(lat_from, lon_from, lat_to, lon_to, tr_type=tr_type) 
+        result = geoApi().get_request(lat_from, lon_from, lat_to, lon_to, tr_type=tr) 
     except:
         result = 0
         raise ConnectionExeptions("Something went wrong")
     else:
         return result["trip"]["summary"]["length"]
     finally:
-        time.sleep(2) # restriction by time in second“
+        time.sleep(2) # restriction by time in second“ 
 
 
 
-def set_km(df:pd.DataFrame=create_test_table()) -> pd.DataFrame:
-    for row in df.iterrows():
-        df.loc[row[0],'distance_car_km)'] = get_km(row[1]["lat_from"],row[1]["lon_from"],row[1]["lat_to"],row[1]["lon_to"], tr_type='car')
-        # df.loc[row[0],'distance_truck_km'] = get_km(row[1]["lat_from"],row[1]["lon_from"],row[1]["lat_to"],row[1]["lon_to"], tr_type='truck')
-        # df.loc[row[0],'distance_bus_km'] = get_km(row[1]["lat_from"],row[1]["lon_from"],row[1]["lat_to"],row[1]["lon_to"], tr_type='bus')
+def set_km(df:pd.DataFrame=create_test_table(), tr_columns: list=[0]) -> pd.DataFrame:
+    for id in tr_columns:
+        for row in df.iterrows():
+            if id==0:
+                df.loc[row[0],'distance_car_km'] = get_km(row[1]["lat_from"],row[1]["lon_from"],row[1]["lat_to"],row[1]["lon_to"], tr=0)
+            if id==1:
+                df.loc[row[0],'distance_truck_km'] = get_km(row[1]["lat_from"],row[1]["lon_from"],row[1]["lat_to"],row[1]["lon_to"], tr=1)
+            if id==2:
+                df.loc[row[0],'distance_bus_km'] = get_km(row[1]["lat_from"],row[1]["lon_from"],row[1]["lat_to"],row[1]["lon_to"], tr=2)
+            if id==3:
+                df.loc[row[0],'distance_motocircle_km'] = get_km(row[1]["lat_from"],row[1]["lon_from"],row[1]["lat_to"],row[1]["lon_to"], tr=3)
+
     return df
 
 if __name__=='__main__':
-    print(set_km())
+    print(set_km(tr_columns=[1]))
