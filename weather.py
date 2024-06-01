@@ -60,4 +60,4 @@ if __name__=='__main__':
     if not bool(city.strip()):
         city = "Kyiv"
     weather_data = Weather.get_weather(city)
-    print(weather_data)
+    print(json.dumps(weather_data, indent=2, ensure_ascii=False))
